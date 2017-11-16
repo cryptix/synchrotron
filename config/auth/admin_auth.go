@@ -7,7 +7,7 @@ import (
 	"github.com/qor/qor"
 	"github.com/qor/roles"
 
-	"github.com/qor/qor-example/app/models"
+	"github.com/cryptix/synchrotron/app/models"
 )
 
 func init() {
@@ -16,16 +16,10 @@ func init() {
 	})
 }
 
-type AdminAuth struct {
-}
+type AdminAuth struct{}
 
-func (AdminAuth) LoginURL(c *admin.Context) string {
-	return "/auth/login"
-}
-
-func (AdminAuth) LogoutURL(c *admin.Context) string {
-	return "/auth/logout"
-}
+func (AdminAuth) LoginURL(c *admin.Context) string  { return "/auth/login" }
+func (AdminAuth) LogoutURL(c *admin.Context) string { return "/auth/logout" }
 
 func (AdminAuth) GetCurrentUser(c *admin.Context) qor.CurrentUser {
 	currentUser, _ := Auth.GetCurrentUser(c.Request).(qor.CurrentUser)

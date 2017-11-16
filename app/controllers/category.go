@@ -3,9 +3,9 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/qor/qor-example/app/models"
-	"github.com/qor/qor-example/config"
-	"github.com/qor/qor-example/config/utils"
+	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/config"
+	"github.com/cryptix/synchrotron/config/utils"
 )
 
 func CategoryShow(w http.ResponseWriter, req *http.Request) {

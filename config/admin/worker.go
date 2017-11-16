@@ -11,8 +11,8 @@ import (
 	"github.com/qor/qor"
 	"github.com/qor/worker"
 
-	"github.com/qor/qor-example/app/models"
-	"github.com/qor/qor-example/db"
+	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/db"
 )
 
 func getWorker() *worker.Worker {

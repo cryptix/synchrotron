@@ -11,8 +11,6 @@ import (
 	"strings"
 	"time"
 
-	"golang.org/x/crypto/bcrypt"
-
 	"github.com/jinzhu/gorm"
 	"github.com/qor/action_bar"
 	"github.com/qor/activity"
@@ -27,15 +25,17 @@ import (
 	"github.com/qor/page_builder"
 	"github.com/qor/publish2"
 	"github.com/qor/qor"
-	"github.com/qor/qor-example/app/models"
-	"github.com/qor/qor-example/config/auth"
-	"github.com/qor/qor-example/config/i18n"
-	"github.com/qor/qor-example/db"
 	"github.com/qor/qor/resource"
 	"github.com/qor/qor/utils"
 	"github.com/qor/transition"
 	"github.com/qor/validations"
 	"github.com/qor/widget"
+	"golang.org/x/crypto/bcrypt"
+
+	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/config/auth"
+	"github.com/cryptix/synchrotron/config/i18n"
+	"github.com/cryptix/synchrotron/db"
 )
 
 var Admin *admin.Admin
@@ -573,7 +573,6 @@ func init() {
 	// 	}})
 	// page.Meta(&admin.Meta{Name: "QorWidgetSettingsSorter"})
 
-	initSeo()
 	initFuncMap()
 	initRouter()
 }

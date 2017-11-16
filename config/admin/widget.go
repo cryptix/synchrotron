@@ -12,11 +12,12 @@ import (
 	"github.com/qor/l10n"
 	"github.com/qor/media/oss"
 	"github.com/qor/qor"
-	"github.com/qor/qor-example/app/models"
-	"github.com/qor/qor-example/db"
 	"github.com/qor/qor/resource"
 	"github.com/qor/sorting"
 	"github.com/qor/widget"
+
+	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/db"
 )
 
 var Widgets *widget.Widgets
@@ -125,7 +126,7 @@ func initWidgets() {
 		imageRes := Admin.NewResource(&imageSetting{})
 		imageRes.Meta(&admin.Meta{Name: "Image"})
 
-		banner_editor.RegisterViewPath("github.com/qor/qor-example/app/views/banner_editor")
+		banner_editor.RegisterViewPath("github.com/cryptix/synchrotron/app/views/banner_editor")
 		banner_editor.RegisterElement(&banner_editor.Element{
 			Icon:     "<i class=material-icons>short_text</i>",
 			Name:     "Add Header",

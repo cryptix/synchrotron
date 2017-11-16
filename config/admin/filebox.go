@@ -4,8 +4,8 @@ import (
 	"github.com/qor/filebox"
 	"github.com/qor/roles"
 
-	"github.com/qor/qor-example/config"
-	"github.com/qor/qor-example/config/auth"
+	"github.com/cryptix/synchrotron/config"
+	"github.com/cryptix/synchrotron/config/auth"
 )
 
 var Filebox *filebox.Filebox

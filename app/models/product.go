@@ -14,13 +14,11 @@ import (
 	"github.com/qor/media/media_library"
 	"github.com/qor/media/oss"
 	"github.com/qor/publish2"
-	qor_seo "github.com/qor/seo"
 	"github.com/qor/slug"
 	"github.com/qor/sorting"
 	"github.com/qor/validations"
 
-	"github.com/qor/qor-example/config/seo"
-	"github.com/qor/qor-example/db"
+	"github.com/cryptix/synchrotron/db"
 )
 
 type Product struct {
@@ -42,7 +40,6 @@ type Product struct {
 	ColorVariations       []ColorVariation `l10n:"sync"`
 	ColorVariationsSorter sorting.SortableCollection
 	ProductProperties     ProductProperties `sql:"type:text"`
-	Seo                   qor_seo.Setting
 
 	Variations []ProductVariation
 
@@ -70,10 +67,6 @@ type ProductVariation struct {
 	SellingPrice      uint
 	AvailableQuantity uint
 	Images            media_library.MediaBox
-}
-
-func (product Product) GetSEO() *qor_seo.SEO {
-	return seo.SEOCollection.GetSEO("Product Page")
 }
 
 func (product Product) DefaultPath() string {

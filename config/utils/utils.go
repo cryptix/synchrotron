@@ -6,11 +6,12 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm"
 	"github.com/qor/l10n"
-	"github.com/qor/qor-example/app/models"
-	"github.com/qor/qor-example/config/admin"
-	"github.com/qor/qor-example/config/auth"
-	"github.com/qor/qor-example/db"
 	"github.com/qor/qor/utils"
+
+	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/config/admin"
+	"github.com/cryptix/synchrotron/config/auth"
+	"github.com/cryptix/synchrotron/db"
 )
 
 // GetCurrentUser get current user from request

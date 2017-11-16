@@ -6,11 +6,11 @@ import (
 	"github.com/qor/banner_editor"
 	"github.com/qor/help"
 	"github.com/qor/media/asset_manager"
-	"github.com/qor/qor-example/app/models"
-	"github.com/qor/qor-example/config/admin"
-	"github.com/qor/qor-example/config/seo"
-	"github.com/qor/qor-example/db"
 	"github.com/qor/transition"
+
+	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/config/admin"
+	"github.com/cryptix/synchrotron/db"
 )
 
 func init() {
@@ -36,8 +36,6 @@ func init() {
 	AutoMigrate(&admin.QorWidgetSetting{})
 
 	AutoMigrate(&models.Page{})
-
-	AutoMigrate(&seo.MySEOSetting{})
 
 	AutoMigrate(&models.MediaLibrary{})
 

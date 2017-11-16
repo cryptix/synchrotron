@@ -25,18 +25,13 @@ _testmain.go
 *.exe
 *.test
 *.prof
-runner-build
-qor-example
+synchrotron
 
 config/database*yml
 public/system
 public/downloads
-config/admin/bindatafs/templates_bindatafs.go
+logs/
 
-.editorconfig
-deploy.sh
-db/seeds/enterprise
-db/seeds/main
 harp.json
 .harp
 tmp/*
@@ -49,8 +44,6 @@ public/webpack/
 npm-debug.log
 
 config/*.yml
-public/microsites/*
 vendor/*
-.DS_Store
 
 *_env

@@ -4,15 +4,15 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/qor/qor-example/app/models"
-	"github.com/qor/qor-example/config"
-	"github.com/qor/qor-example/config/utils"
+	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/config"
+	"github.com/cryptix/synchrotron/config/utils"
 )
 
 func ProductIndex(w http.ResponseWriter, req *http.Request) {
 	var (
-		products        []models.Product
-		tx              = utils.GetDB(req)
+		products []models.Product
+		tx       = utils.GetDB(req)
 	)
 
 	tx.Preload("Category").Find(&products)

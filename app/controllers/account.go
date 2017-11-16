@@ -6,11 +6,11 @@ import (
 
 	// "github.com/qor/action_bar"
 	// "github.com/qor/qor"
-	"github.com/qor/qor-example/app/models"
-	"github.com/qor/qor-example/config"
-	"github.com/qor/qor-example/config/utils"
-	// "github.com/qor/qor-example/config/admin"
-	// "github.com/qor/qor-example/config/seo"
+	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/config"
+	"github.com/cryptix/synchrotron/config/utils"
+	// "github.com/cryptix/synchrotron/config/admin"
+	// "github.com/cryptix/synchrotron/config/seo"
 )
 
 func AccountShow(w http.ResponseWriter, req *http.Request) {

@@ -7,7 +7,7 @@ import (
 	"github.com/qor/qor/utils"
 	"github.com/qor/validations"
 
-	"github.com/qor/qor-example/app/models"
+	"github.com/cryptix/synchrotron/app/models"
 )
 
 var ProductExchange = exchange.NewResource(&models.Product{}, exchange.Config{PrimaryField: "Code"})
