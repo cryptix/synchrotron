@@ -1,0 +1,202 @@
+
+# Gopkg.toml example
+#
+# Refer to https://github.com/golang/dep/blob/master/docs/Gopkg.toml.md
+# for detailed Gopkg.toml documentation.
+#
+# required = ["github.com/user/thing/cmd/thing"]
+# ignored = ["github.com/user/project/pkgX", "bitbucket.org/user/project/pkgA/pkgY"]
+#
+# [[constraint]]
+#   name = "github.com/user/project"
+#   version = "1.0.0"
+#
+# [[constraint]]
+#   name = "github.com/user/project2"
+#   branch = "dev"
+#   source = "github.com/myfork/project2"
+#
+# [[override]]
+#  name = "github.com/x/y"
+#  version = "2.4.0"
+
+[[constraint]]
+  name = "github.com/cryptix/go"
+  version = "1.0.0"
+
+[[constraint]]
+  name = "github.com/go-chi/chi"
+  version = "3.3.0"
+
+[[constraint]]
+  name = "github.com/go-kit/kit"
+  version = "0.6.0"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/jinzhu/configor"
+
+[[constraint]]
+  name = "github.com/jinzhu/gorm"
+  branch = "master"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/jinzhu/now"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/jteeuwen/go-bindata"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/microcosm-cc/bluemonday"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/action_bar"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/activity"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/admin"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/assetfs"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/auth"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/auth_themes"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/banner_editor"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/exchange"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/filebox"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/help"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/i18n"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/l10n"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/location"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/mailer"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/media"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/middlewares"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/notification"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/page_builder"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/publish2"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/qor"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/redirect_back"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/roles"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/session"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/slug"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/sorting"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/transition"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/validations"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/widget"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/wildcard_router"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/qor/worker"
+
+[[constraint]]
+  branch = "master"
+  name = "golang.org/x/crypto"
+
+[[override]]
+  name = "github.com/qor/render"
+  source = "github.com/cryptix/qor_render"
+  version = "v1.1"
+
+[[override]]
+  branch = "master"
+  name = "github.com/qor/serializable_meta"
+
+[[override]]
+  branch = "master"
+  name = "github.com/qor/responder"
+
+[[override]]
+  branch = "master"
+  name = "github.com/qor/cache"
+
+[[override]]
+  branch = "master"
+  name = "github.com/qor/audited"
+
+[[override]]
+  branch = "master"
+  name = "github.com/qor/publish"

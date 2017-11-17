@@ -44,6 +44,5 @@ public/webpack/
 npm-debug.log
 
 config/*.yml
-vendor/*
 
 *_env
