@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"errors"
 	"fmt"
 	"path/filepath"
 	"time"
@@ -15,8 +16,38 @@ import (
 	"github.com/cryptix/synchrotron/db"
 )
 
+type SimpleQueue struct {
+	Worker *worker.Worker
+}
+
+func (q *SimpleQueue) Add(j worker.QorJobInterface) error {
+	return q.Worker.RunJob(j.GetJobID())
+}
+
+func (q *SimpleQueue) Run(j worker.QorJobInterface) error {
+	job := j.GetJob()
+
+	if job.Handler != nil {
+		return job.Handler(j.GetSerializableArgument(j), j)
+	}
+
+	return errors.New("SimpleQue:no handler found for job " + job.Name)
+}
+
+func (q *SimpleQueue) Kill(j worker.QorJobInterface) error {
+	return errors.New("SimpleQue:kill not implemented")
+}
+
+func (q *SimpleQueue) Remove(j worker.QorJobInterface) error {
+	return errors.New("SimpleQue:remove not implemented")
+}
+
 func getWorker() *worker.Worker {
-	Worker := worker.New()
+	sq := SimpleQueue{}
+	Worker := worker.New(&worker.Config{
+		Queue: &sq,
+	})
+	sq.Worker = Worker
 
 	type sendNewsletterArgument struct {
 		Subject      string
@@ -55,54 +86,56 @@ func getWorker() *worker.Worker {
 
 			var errorCount uint
 
-			if err := ProductExchange.Import(
-				csv.New(filepath.Join("public", argument.File.URL())),
-				context,
-				func(progress exchange.Progress) error {
-					var cells = []worker.TableCell{
-						{Value: fmt.Sprint(progress.Current)},
+			cb := func(progress exchange.Progress) error {
+				var cells = []worker.TableCell{
+					{Value: fmt.Sprint(progress.Current)},
+				}
+
+				var hasError bool
+				for _, cell := range progress.Cells {
+					var tableCell = worker.TableCell{
+						Value: fmt.Sprint(cell.Value),
 					}
 
-					var hasError bool
-					for _, cell := range progress.Cells {
-						var tableCell = worker.TableCell{
-							Value: fmt.Sprint(cell.Value),
-						}
-
-						if cell.Error != nil {
-							hasError = true
-							errorCount++
-							tableCell.Error = cell.Error.Error()
-						}
-
-						cells = append(cells, tableCell)
+					if cell.Error != nil {
+						hasError = true
+						errorCount++
+						tableCell.Error = cell.Error.Error()
 					}
 
-					if hasError {
-						if errorCount == 1 {
-							var headerCells = []worker.TableCell{
-								{Value: "Line No."},
-							}
-							for _, cell := range progress.Cells {
-								headerCells = append(headerCells, worker.TableCell{
-									Value: cell.Header,
-								})
-							}
-							qorJob.AddResultsRow(headerCells...)
-						}
+					cells = append(cells, tableCell)
+				}
 
-						qorJob.AddResultsRow(cells...)
+				if hasError {
+					if errorCount == 1 {
+						var headerCells = []worker.TableCell{
+							{Value: "Line No."},
+						}
+						for _, cell := range progress.Cells {
+							headerCells = append(headerCells, worker.TableCell{
+								Value: cell.Header,
+							})
+						}
+						qorJob.AddResultsRow(headerCells...)
 					}
 
-					qorJob.SetProgress(uint(float32(progress.Current) / float32(progress.Total) * 100))
-					qorJob.AddLog(fmt.Sprintf("%d/%d Importing product %v", progress.Current, progress.Total, progress.Value.(*models.Product).Code))
-					return nil
-				},
-			); err != nil {
-				qorJob.AddLog(err.Error())
+					qorJob.AddResultsRow(cells...)
+				}
+
+				qorJob.SetProgress(uint(float32(progress.Current) / float32(progress.Total) * 100))
+				qorJob.AddLog(fmt.Sprintf("%d/%d Importing product %v", progress.Current, progress.Total, progress.Value.(*models.Product).Code))
+				return nil
 			}
 
-			return nil
+			err := ProductExchange.Import(
+				csv.New(filepath.Join("public", argument.File.URL())),
+				context, cb)
+			if err != nil {
+				qorJob.AddLog(err.Error())
+				qorJob.SetStatus(worker.JobStatusException)
+			}
+
+			return err
 		},
 		Resource: Admin.NewResource(&importProductArgument{}),
 	})
