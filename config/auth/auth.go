@@ -5,7 +5,6 @@ import (
 
 	"github.com/qor/auth"
 	"github.com/qor/auth/authority"
-	"github.com/qor/auth/providers/github"
 	"github.com/qor/auth/providers/twitter"
 	"github.com/qor/auth_themes/clean"
 
@@ -31,8 +30,11 @@ var (
 )
 
 func init() {
-	Auth.RegisterProvider(github.New(&config.Config.Github))
-	Auth.RegisterProvider(twitter.New(&config.Config.Twitter))
+	//Auth.RegisterProvider(github.New(&config.Config.Github))
+	Auth.RegisterProvider(twitter.New(&twitter.Config{
+		ClientID:     config.Config.TWAK,
+		ClientSecret: config.Config.TWAS,
+	}))
 
 	Authority.Register("logged_in_half_hour", authority.Rule{TimeoutSinceLastLogin: time.Minute * 30})
 }

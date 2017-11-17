@@ -7,7 +7,6 @@ import (
 	"github.com/jinzhu/configor"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/qor/auth/providers/github"
-	"github.com/qor/auth/providers/twitter"
 	"github.com/qor/mailer"
 	"github.com/qor/mailer/logger"
 	"github.com/qor/redirect_back"
@@ -30,9 +29,10 @@ var Config = struct {
 		Name    string `env:"DBName" default:"qor_example"`
 		Adapter string
 	}
-	SMTP    SMTPConfig
-	Github  github.Config
-	Twitter twitter.Config
+	TWAK   string `env:"TWAPI_KEY" default:"key"`
+	TWAS   string `env:"TWAPI_SECRET" default:"sec"`
+	SMTP   SMTPConfig
+	Github github.Config
 }{}
 
 var (
