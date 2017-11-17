@@ -95,8 +95,9 @@ func main() {
 
 	h := logging.InjectHandler(kitlog.With(log, "unit", "http"))(middlewares.Apply(mux))
 
-	log.Log("event", "listening", "addr", config.Config.HTTPAddr)
-	if err := http.ListenAndServe(config.Config.HTTPAddr, h); err != nil {
+	addr := fmt.Sprintf(":%d", config.Config.Port)
+	log.Log("event", "listening", "addr", addr)
+	if err := http.ListenAndServe(addr, h); err != nil {
 		panic(err)
 	}
 }

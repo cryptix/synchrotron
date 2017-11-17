@@ -24,8 +24,8 @@ type SMTPConfig struct {
 }
 
 var Config = struct {
-	HTTPAddr string `default:":7000" env:"PORT"`
-	DB       struct {
+	Port int `default:"7000" env:"PORT"`
+	DB   struct {
 		Name string `env:"DBName" default:"qor_example"`
 	}
 	SMTP    SMTPConfig
