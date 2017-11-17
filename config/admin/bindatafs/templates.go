@@ -1,4 +1,4 @@
-// +build !bindatafs
+// +build !heroku
 
 package bindatafs
 

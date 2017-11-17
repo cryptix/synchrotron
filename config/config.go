@@ -2,9 +2,8 @@ package config
 
 import (
 	"html/template"
-	"path/filepath"
 
-	"github.com/cryptix/go/goutils"
+	"github.com/cryptix/go/logging"
 	"github.com/jinzhu/configor"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/qor/auth/providers/github"
@@ -14,6 +13,8 @@ import (
 	"github.com/qor/redirect_back"
 	"github.com/qor/render"
 	"github.com/qor/session/manager"
+
+	"github.com/cryptix/synchrotron/config/admin/bindatafs"
 )
 
 type SMTPConfig struct {
@@ -26,7 +27,8 @@ type SMTPConfig struct {
 var Config = struct {
 	Port int `default:"7000" env:"PORT"`
 	DB   struct {
-		Name string `env:"DBName" default:"qor_example"`
+		Name    string `env:"DBName" default:"qor_example"`
+		Adapter string
 	}
 	SMTP    SMTPConfig
 	Github  github.Config
@@ -34,23 +36,23 @@ var Config = struct {
 }{}
 
 var (
-	Root         = goutils.MustLocatePackage("github.com/cryptix/synchrotron")
 	View         *render.Render
 	Mailer       *mailer.Mailer
 	RedirectBack = redirect_back.New(&redirect_back.Config{
 		SessionManager:  manager.SessionManager,
 		IgnoredPrefixes: []string{"/auth"},
 	})
+	check = logging.CheckFatal
 )
 
 func init() {
-	if err := configor.Load(&Config, "config/database.yml", "config/smtp.yml", "config/application.yml"); err != nil {
-		panic(err)
-	}
+	err := configor.Load(&Config, "config/database.yml", "config/smtp.yml", "config/application.yml")
+	check(err)
 
 	View = render.New(&render.Config{
-		Layout:    "application",
-		ViewPaths: []string{filepath.Join(Root, "app", "views")},
+		Layout:          "application",
+		ViewPaths:       []string{"app/views"},
+		AssetFileSystem: bindatafs.AssetFS,
 	})
 
 	htmlSanitizer := bluemonday.UGCPolicy()

@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"path/filepath"
 
 	"github.com/go-chi/chi"
 	"github.com/qor/publish2"
@@ -14,7 +13,6 @@ import (
 
 	"github.com/cryptix/go/logging"
 	"github.com/cryptix/synchrotron/app/controllers"
-	"github.com/cryptix/synchrotron/config"
 	"github.com/cryptix/synchrotron/config/admin/bindatafs"
 	"github.com/cryptix/synchrotron/config/auth"
 	"github.com/cryptix/synchrotron/db"
@@ -58,7 +56,7 @@ func Router(l logging.Interface) *http.ServeMux {
 		rootMux = http.NewServeMux()
 
 		rootMux.Handle("/auth/", auth.Auth.NewServeMux())
-		rootMux.Handle("/system/", utils.FileServer(http.Dir(filepath.Join(config.Root, "public"))))
+		//rootMux.Handle("/system/", utils.FileServer(http.Dir(filepath.Join(config.Root, "public"))))
 		assetFS := bindatafs.AssetFS.FileServer(http.Dir("public"), "javascripts", "stylesheets", "images", "dist", "fonts", "vendors")
 		for _, path := range []string{"javascripts", "stylesheets", "images", "dist", "fonts", "vendors"} {
 			rootMux.Handle(fmt.Sprintf("/%s/", path), assetFS)

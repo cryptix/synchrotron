@@ -33,6 +33,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"github.com/cryptix/synchrotron/app/models"
+	"github.com/cryptix/synchrotron/config/admin/bindatafs"
 	"github.com/cryptix/synchrotron/config/auth"
 	"github.com/cryptix/synchrotron/config/i18n"
 	"github.com/cryptix/synchrotron/db"
@@ -43,7 +44,12 @@ var ActionBar *action_bar.ActionBar
 var Genders = []string{"Men", "Women", "Kids"}
 
 func init() {
-	Admin = admin.New(&admin.AdminConfig{SiteName: "QOR DEMO", Auth: auth.AdminAuth{}, DB: db.DB.Set(publish2.VisibleMode, publish2.ModeOff).Set(publish2.ScheduleMode, publish2.ModeOff)})
+	Admin = admin.New(&admin.AdminConfig{
+		SiteName: "QOR DEMO",
+		Auth:     auth.AdminAuth{},
+		DB:       db.DB.Set(publish2.VisibleMode, publish2.ModeOff).Set(publish2.ScheduleMode, publish2.ModeOff),
+		AssetFS:  bindatafs.AssetFS.NameSpace("admin"),
+	})
 
 	// Add Notification
 	Notification := notification.New(&notification.Config{})

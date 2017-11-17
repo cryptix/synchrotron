@@ -8,6 +8,7 @@ import (
 	"github.com/qor/media/asset_manager"
 	"github.com/qor/transition"
 
+	"github.com/cryptix/go/logging"
 	"github.com/cryptix/synchrotron/app/models"
 	"github.com/cryptix/synchrotron/config/admin"
 	"github.com/cryptix/synchrotron/db"
@@ -48,8 +49,10 @@ func init() {
 	AutoMigrate(&banner_editor.QorBannerEditorSetting{})
 }
 
+var check = logging.CheckFatal
+
 func AutoMigrate(values ...interface{}) {
 	for _, value := range values {
-		db.DB.AutoMigrate(value)
+		check(db.DB.AutoMigrate(value).Error)
 	}
 }

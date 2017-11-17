@@ -3,6 +3,8 @@ package utils
 import (
 	"database/sql/driver"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -19,6 +21,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/now"
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/pkg/errors"
 	"github.com/qor/qor"
 
 	"strings"
@@ -220,8 +223,21 @@ func ParseTagOption(str string) map[string]string {
 
 // ExitWithMsg debug error messages and print stack
 func ExitWithMsg(msg interface{}, value ...interface{}) {
-	fmt.Printf("\n"+filenameWithLineNum()+"\n"+fmt.Sprint(msg)+"\n", value...)
-	debug.PrintStack()
+
+	os.Mkdir("panics", os.ModePerm)
+	b, err := ioutil.TempFile("panics", "exitwithmsg")
+	if err != nil {
+		panic(errors.Wrap(err, "failed to create ExitWithMsg log"))
+	}
+	fmt.Fprintf(b, "warning! ExitWithMsg!\nMsg:%v\n", msg)
+	fmt.Fprint(b, value...)
+	fmt.Fprintf(b, "Stack:\n%s", debug.Stack())
+
+	if err := b.Close(); err != nil {
+		panic(errors.Wrap(err, "failed to close ExitWithMsg log"))
+	}
+
+	log.Printf("ExitWithMsg! logName:%s", b.Name())
 }
 
 // FileServer file server that disabled file listing

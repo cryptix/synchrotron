@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"html/template"
 	"io"
@@ -21,6 +22,7 @@ import (
 	"github.com/cryptix/synchrotron/app/models"
 	"github.com/cryptix/synchrotron/config"
 	"github.com/cryptix/synchrotron/config/admin"
+	"github.com/cryptix/synchrotron/config/admin/bindatafs"
 	"github.com/cryptix/synchrotron/config/i18n"
 	"github.com/cryptix/synchrotron/config/routes"
 	"github.com/cryptix/synchrotron/config/utils"
@@ -35,6 +37,10 @@ var (
 )
 
 func main() {
+	cmdLine := flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
+	compileTemplate := cmdLine.Bool("compile-templates", false, "Compile Templates")
+	cmdLine.Parse(os.Args[1:])
+
 	// create timestamped logfile
 	os.Mkdir("logs", 0700)
 	logFileName := fmt.Sprintf("logs/%s-%s.log",
@@ -94,7 +100,12 @@ func main() {
 	}
 
 	h := logging.InjectHandler(kitlog.With(log, "unit", "http"))(middlewares.Apply(mux))
+	h = logging.RecoveryHandler()(h)
 
+	if *compileTemplate {
+		bindatafs.AssetFS.Compile()
+		return
+	}
 	addr := fmt.Sprintf(":%d", config.Config.Port)
 	log.Log("event", "listening", "addr", addr)
 	if err := http.ListenAndServe(addr, h); err != nil {

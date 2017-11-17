@@ -112,7 +112,7 @@ func (assetFS *bindataFS) Compile() error {
 		},
 	}
 	config.Package = "bindatafs"
-	config.Tags = "bindatafs"
+	config.Tags = "heroku"
 	config.Output = filepath.Join(assetFS.Path, "templates_bindatafs.go")
 	config.Prefix = filepath.Join(assetFS.Path, "templates")
 	config.NoMetadata = true

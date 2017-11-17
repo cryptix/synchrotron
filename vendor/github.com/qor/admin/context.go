@@ -205,20 +205,25 @@ func (context *Context) Execute(name string, result interface{}) {
 	if context.Action == "" {
 		context.Action = name
 	}
+	content, err := context.Asset("layout.tmpl")
+	if err != nil {
+		utils.ExitWithMsg(err)
+	}
+	tmpl, err = template.New("layout").Funcs(context.FuncMap()).Parse(string(content))
+	if err != nil {
+		utils.ExitWithMsg(err)
+	}
 
-	if content, err := context.Asset("layout.tmpl"); err == nil {
-		if tmpl, err = template.New("layout").Funcs(context.FuncMap()).Parse(string(content)); err == nil {
-			for _, name := range []string{"header", "footer"} {
-				if tmpl.Lookup(name) == nil {
-					if content, err := context.Asset(name + ".tmpl"); err == nil {
-						tmpl.Parse(string(content))
-					}
-				} else {
+	// optional?
+	for _, name := range []string{"header", "footer"} {
+		if tmpl.Lookup(name) == nil {
+			content, err := context.Asset(name + ".tmpl")
+			if err == nil {
+				_, err = tmpl.Parse(string(content))
+				if err != nil {
 					utils.ExitWithMsg(err)
 				}
 			}
-		} else {
-			utils.ExitWithMsg(err)
 		}
 	}
 
