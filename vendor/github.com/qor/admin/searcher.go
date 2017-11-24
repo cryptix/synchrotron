@@ -81,7 +81,7 @@ func (s *Searcher) Filter(filter *Filter, values *resource.MetaValues) *Searcher
 func (s *Searcher) FindOne() (interface{}, error) {
 	var (
 		err     error
-		context = s.parseContext()
+		context = s.parseContext(false)
 		result  = s.Resource.NewStruct()
 	)
 
@@ -97,7 +97,7 @@ func (s *Searcher) FindOne() (interface{}, error) {
 func (s *Searcher) FindMany() (interface{}, error) {
 	var (
 		err     error
-		context = s.parseContext()
+		context = s.parseContext(true)
 		result  = s.Resource.NewSlice()
 	)
 
@@ -110,25 +110,27 @@ func (s *Searcher) FindMany() (interface{}, error) {
 }
 
 // filterData filter data by scopes, filters, order by and keyword
-func (s *Searcher) filterData(context *qor.Context) *qor.Context {
+func (s *Searcher) filterData(context *qor.Context, withDefaultScope bool) *qor.Context {
 	db := context.GetDB()
 
 	// call default scopes
-	for _, scope := range s.Resource.scopes {
-		if scope.Default {
-			filterWithThisScope := true
+	if withDefaultScope {
+		for _, scope := range s.Resource.scopes {
+			if scope.Default {
+				filterWithThisScope := true
 
-			if scope.Group != "" {
-				for _, s := range s.scopes {
-					if s.Group == scope.Group {
-						filterWithThisScope = false
-						break
+				if scope.Group != "" {
+					for _, s := range s.scopes {
+						if s.Group == scope.Group {
+							filterWithThisScope = false
+							break
+						}
 					}
 				}
-			}
 
-			if filterWithThisScope {
-				db = scope.Handler(db, context)
+				if filterWithThisScope {
+					db = scope.Handler(db, context)
+				}
 			}
 		}
 	}
@@ -181,7 +183,7 @@ func (s *Searcher) filterData(context *qor.Context) *qor.Context {
 	return context
 }
 
-func (s *Searcher) parseContext() *qor.Context {
+func (s *Searcher) parseContext(withDefaultScope bool) *qor.Context {
 	var (
 		searcher = s.clone()
 		context  = searcher.Context.Context.Clone()
@@ -207,7 +209,7 @@ func (s *Searcher) parseContext() *qor.Context {
 		}
 	}
 
-	searcher.filterData(context)
+	searcher.filterData(context, withDefaultScope)
 
 	db := context.GetDB()
 

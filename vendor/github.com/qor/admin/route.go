@@ -110,16 +110,16 @@ func (r *Router) Delete(path string, handle requestHandler, config ...*RouteConf
 	r.sortRoutes(r.routers["DELETE"])
 }
 
-var wildcardRouter = regexp.MustCompile(`/:\w+`)
+var wildcardRouter = regexp.MustCompile("/:\\w+")
 
 func (r *Router) sortRoutes(routes []*routeHandler) {
 	sort.SliceStable(routes, func(i, j int) bool {
-		iIsWildcard := wildcardRouter.MatchString(routes[i].Path)
-		jIsWildcard := wildcardRouter.MatchString(routes[j].Path)
-		// i regexp (true), j static (false) => false
-		// i static (true), j regexp (true) => true
-		if iIsWildcard != jIsWildcard {
-			return jIsWildcard
+		iMatchedWildCards := wildcardRouter.FindAllStringSubmatch(routes[i].Path, -1)
+		jMatchedWildCards := wildcardRouter.FindAllStringSubmatch(routes[j].Path, -1)
+		// i regexp (2), j static (0) => less is true
+		// i regexp (1), j regexp (2) => less is false
+		if len(iMatchedWildCards) != len(jMatchedWildCards) {
+			return len(iMatchedWildCards) < len(jMatchedWildCards)
 		}
 		return len(routes[i].Path) > len(routes[j].Path)
 	})

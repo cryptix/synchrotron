@@ -3,10 +3,12 @@ package media
 import (
 	"bytes"
 	"image"
+	"image/color"
 	"image/draw"
 	"image/gif"
 	_ "image/jpeg"
 	"io/ioutil"
+	"math"
 
 	"github.com/disintegration/imaging"
 )
@@ -29,6 +31,39 @@ type imageHandler struct{}
 
 func (imageHandler) CouldHandle(media Media) bool {
 	return media.IsImage()
+}
+
+func resizeImageTo(img image.Image, size *Size) image.Image {
+	var (
+		imgSize    = img.Bounds().Size()
+		background = imaging.New(size.Width, size.Height, color.NRGBA{0, 0, 0, 0})
+		ratioX     = float64(size.Width) / float64(imgSize.X)
+		ratioY     = float64(size.Height) / float64(imgSize.Y)
+		// 100x200 -> 200x300  ==>  ratioX = 2,   ratioY = 1.5  ==> resize to (x1.5) = 150x300
+		// 100x200 -> 20x50    ==>  ratioX = 0.2, ratioY = 0.4  ==> resize to (x0.2) = 20x40
+		// 100x200 -> 50x0     ==>  ratioX = 0.5, ratioY = 0    ==> resize to (x0.5) = 50x100
+		minRatio = math.Min(ratioX, ratioY)
+	)
+
+	if minRatio == 0 {
+		minRatio = math.Max(ratioX, ratioY)
+
+		if size.Width == 0 && size.Height != 0 {
+			// size 50x0, source 100x200 => crop to 50x100
+			newWidth := int(float64(imgSize.X) / float64(imgSize.Y) * float64(size.Height))
+			background = imaging.New(newWidth, size.Height, color.NRGBA{0, 0, 0, 0})
+		} else if size.Height == 0 && size.Width != 0 {
+			// size 0x50, source 100x200 => crop to 25x50
+			newHeight := int(float64(imgSize.Y) / float64(imgSize.X) * float64(size.Width))
+			background = imaging.New(size.Width, newHeight, color.NRGBA{0, 0, 0, 0})
+		} else if size.Height == 0 && size.Width == 0 {
+			minRatio = 1
+			background = imaging.New(imgSize.X, imgSize.Y, color.NRGBA{0, 0, 0, 0})
+		}
+	}
+
+	img = imaging.Resize(img, int(float64(imgSize.X)*minRatio), int(float64(imgSize.Y)*minRatio), imaging.CatmullRom)
+	return imaging.PasteCenter(background, img)
 }
 
 func (imageHandler) Handle(media Media, file FileInterface, option *Option) (err error) {
@@ -70,7 +105,7 @@ func (imageHandler) Handle(media Media, file FileInterface, option *Option) (err
 								if cropOption := media.GetCropOption(key); cropOption != nil {
 									img = imaging.Crop(g.Image[i], *cropOption)
 								}
-								img = imaging.Thumbnail(img, size.Width, size.Height, imaging.Lanczos)
+								img = resizeImageTo(img, size)
 								g.Image[i] = image.NewPaletted(image.Rect(0, 0, size.Width, size.Height), g.Image[i].Palette)
 								draw.Draw(g.Image[i], image.Rect(0, 0, size.Width, size.Height), img, image.Pt(0, 0), draw.Src)
 							}
@@ -101,9 +136,8 @@ func (imageHandler) Handle(media Media, file FileInterface, option *Option) (err
 								newImage = imaging.Crop(newImage, *cropOption)
 							}
 
-							dst := imaging.Thumbnail(newImage, size.Width, size.Height, imaging.Lanczos)
 							var buffer bytes.Buffer
-							imaging.Encode(&buffer, dst, *format)
+							imaging.Encode(&buffer, resizeImageTo(newImage, size), *format)
 							media.Store(media.URL(key), option, &buffer)
 						}
 					} else {

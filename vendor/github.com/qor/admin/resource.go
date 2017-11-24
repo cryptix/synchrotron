@@ -167,7 +167,7 @@ func (res *Resource) AddSubResource(fieldName string, config ...*Config) (subRes
 			Name:   "Delete",
 			Method: "DELETE",
 			URL: func(record interface{}, context *Context) string {
-				return context.URLFor(record, res)
+				return context.URLFor(record, subRes)
 			},
 			Permission: subRes.Config.Permission,
 			Modes:      []string{"menu_item"},

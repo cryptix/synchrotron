@@ -21,7 +21,7 @@
 
 [[projects]]
   name = "github.com/cryptix/go"
-  packages = ["goutils","logging"]
+  packages = ["logging"]
   revision = "c8ed48a26147d732aa261d3751677f61b038abaa"
   version = "v1"
 
@@ -40,8 +40,8 @@
 [[projects]]
   name = "github.com/go-chi/chi"
   packages = ["."]
-  revision = "f7c66f685bcab06bcce78ac212c5f3553c063d19"
-  version = "v3.3.0"
+  revision = "687d2792aedd8e8ac3bbd8592cf55b91d7ea8ce9"
+  version = "v3.3.1"
 
 [[projects]]
   name = "github.com/go-kit/kit"
@@ -71,7 +71,7 @@
   branch = "master"
   name = "github.com/google/go-github"
   packages = ["github"]
-  revision = "471e67c93cdd36a5f7c9bba5d6d11665ba12147d"
+  revision = "414302483313784b058d0c1f3abb9b9e4e6adcea"
 
 [[projects]]
   branch = "master"
@@ -118,7 +118,7 @@
 [[projects]]
   branch = "master"
   name = "github.com/jinzhu/gorm"
-  packages = [".","dialects/sqlite"]
+  packages = [".","dialects/postgres","dialects/sqlite"]
   revision = "0a51f6cdc55d1650d9ed3b4c13026cfa9133b01e"
 
 [[projects]]
@@ -156,6 +156,12 @@
   name = "github.com/kr/text"
   packages = ["."]
   revision = "7cafcd837844e784b526369c9bce262804aebc60"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/lib/pq"
+  packages = [".","hstore","oid"]
+  revision = "8c6ee72f3e6bcb1542298dd5f76cb74af9742cec"
 
 [[projects]]
   name = "github.com/mattn/go-sqlite3"
@@ -197,7 +203,7 @@
   branch = "master"
   name = "github.com/qor/admin"
   packages = ["."]
-  revision = "b30fe929dc97704f924d4d3bf0b9df5785fd8de9"
+  revision = "cb6a58c94a2555a84f2378d618447d0d883c9c02"
 
 [[projects]]
   branch = "master"
@@ -239,7 +245,7 @@
   branch = "master"
   name = "github.com/qor/exchange"
   packages = [".","backends/csv"]
-  revision = "4f1c9235df4b6842b0231d58e9afe94538b91dbd"
+  revision = "56350463269fe5ed247c0bde851b25255ce19893"
 
 [[projects]]
   branch = "master"
@@ -281,7 +287,7 @@
   branch = "master"
   name = "github.com/qor/media"
   packages = [".","asset_manager","media_library","oss"]
-  revision = "3f2411215fc91532c6eb2efe90f541aba8ca11f3"
+  revision = "ca03a859ff9070a860e9a84a0c18281b5c8f0588"
 
 [[projects]]
   branch = "master"
@@ -323,7 +329,7 @@
   branch = "master"
   name = "github.com/qor/qor"
   packages = [".","resource","utils"]
-  revision = "1db70d420169efbde41b768ca8a4d24ec2162ac1"
+  revision = "610165c4bb100d28fbe93c4bf691a1cab4508201"
 
 [[projects]]
   branch = "master"
@@ -426,7 +432,7 @@
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish"]
-  revision = "9f005a07e0d31d45e6656d241bb5c0f2efd4bc94"
+  revision = "b080dc9a8c480b08e698fb1219160d598526310f"
 
 [[projects]]
   branch = "master"
@@ -438,13 +444,13 @@
   branch = "master"
   name = "golang.org/x/net"
   packages = ["context","context/ctxhttp","html","html/atom"]
-  revision = "9dfe39835686865bff950a07b394c12a98ddc811"
+  revision = "c7086645de248775cbf2373cf5ca4d2fa664b8c1"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/oauth2"
   packages = [".","internal"]
-  revision = "9ff8ebcc8e241d46f52ecc5bff0e5a2f2dbef402"
+  revision = "f95fa95eaa936d9d87489b15d1d18b97c1ba9c28"
 
 [[projects]]
   branch = "master"
@@ -479,6 +485,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f38faa99120d18fd0c9da3a22316f69ed95cfa52adec54194be0a38124ee5eae"
+  inputs-digest = "8772afe8403e7a77e3e1f994e61a278a1a3c17ec0cd60c4dfd48e09f5d885515"
   solver-name = "gps-cdcl"
   solver-version = 1
