@@ -17,15 +17,6 @@ import (
 func init() {
 	AutoMigrate(&asset_manager.AssetManager{})
 
-	AutoMigrate(&models.Product{}, &models.ProductVariation{}, &models.ProductImage{}, &models.ColorVariation{}, &models.ColorVariationImage{}, &models.SizeVariation{})
-	AutoMigrate(&models.Color{}, &models.Size{}, &models.Material{}, &models.Category{}, &models.Collection{})
-
-	AutoMigrate(&models.Address{})
-
-	AutoMigrate(&models.Order{}, &models.OrderItem{})
-
-	AutoMigrate(&models.Store{})
-
 	AutoMigrate(&models.Setting{})
 
 	AutoMigrate(&models.User{})

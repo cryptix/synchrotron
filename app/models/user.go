@@ -1,8 +1,6 @@
 package models
 
 import (
-	"time"
-
 	"github.com/jinzhu/gorm"
 	"github.com/qor/media"
 	"github.com/qor/media/oss"
@@ -10,40 +8,15 @@ import (
 
 type User struct {
 	gorm.Model
-	Email                  string `form:"email"`
-	Password               string
-	Name                   string `form:"name"`
-	Gender                 string
-	Role                   string
-	Birthday               *time.Time
-	Balance                float32
-	DefaultBillingAddress  uint `form:"default-billing-address"`
-	DefaultShippingAddress uint `form:"default-shipping-address"`
-	Addresses              []Address
-	Orders                 []Order
-	Avatar                 AvatarImageStorage
-
-	// Confirm
-	ConfirmToken string
-	Confirmed    bool
-
-	// Recover
-	RecoverToken       string
-	RecoverTokenExpiry *time.Time
-
-	// Accepts
-	AcceptPrivate bool `form:"accept-private"`
-	AcceptLicense bool `form:"accept-license"`
-	AcceptNews    bool `form:"accept-news"`
+	Email    string `form:"email"`
+	Password string
+	Name     string `form:"name"`
+	Role     string
+	Avatar   AvatarImageStorage
 }
 
-func (user User) DisplayName() string {
-	return user.Email
-}
-
-func (user User) AvailableLocales() []string {
-	return []string{"en-US", "zh-CN"}
-}
+func (user User) DisplayName() string        { return user.Email }
+func (user User) AvailableLocales() []string { return []string{"de-DE", "en-US", "zh-CN"} }
 
 type AvatarImageStorage struct{ oss.OSS }
 
