@@ -46,3 +46,5 @@ npm-debug.log
 config/*.yml
 
 *_env
+
+*.sw[op]
