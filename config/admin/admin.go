@@ -73,8 +73,6 @@ func init() {
 
 	// Add User
 	user := Admin.AddResource(&models.User{}, &admin.Config{Menu: []string{"User Management"}})
-	user.Meta(&admin.Meta{Name: "Gender", Config: &admin.SelectOneConfig{Collection: []string{"Male", "Female", "Neutral"}}})
-	user.Meta(&admin.Meta{Name: "Birthday", Type: "date"})
 	user.Meta(&admin.Meta{Name: "Role", Config: &admin.SelectOneConfig{Collection: []string{"Admin", "Maintainer", "Member"}}})
 	user.Meta(&admin.Meta{Name: "Password",
 		Type:   "password",
