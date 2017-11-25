@@ -12,9 +12,9 @@ import (
 	"github.com/qor/wildcard_router"
 
 	"github.com/cryptix/go/logging"
-	"github.com/cryptix/synchrotron/app/controllers"
 	"github.com/cryptix/synchrotron/config/admin/bindatafs"
 	"github.com/cryptix/synchrotron/config/auth"
+	"github.com/cryptix/synchrotron/controllers"
 	"github.com/cryptix/synchrotron/db"
 )
 
