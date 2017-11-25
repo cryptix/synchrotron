@@ -19,7 +19,6 @@ import (
 	"github.com/qor/widget"
 
 	"github.com/cryptix/go/logging"
-	"github.com/cryptix/synchrotron/app/models"
 	"github.com/cryptix/synchrotron/config"
 	"github.com/cryptix/synchrotron/config/admin"
 	"github.com/cryptix/synchrotron/config/admin/bindatafs"
@@ -27,6 +26,7 @@ import (
 	"github.com/cryptix/synchrotron/config/routes"
 	"github.com/cryptix/synchrotron/config/utils"
 	_ "github.com/cryptix/synchrotron/db/migrations"
+	"github.com/cryptix/synchrotron/models"
 )
 
 var (

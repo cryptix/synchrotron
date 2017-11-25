@@ -9,9 +9,9 @@ import (
 	"github.com/qor/transition"
 
 	"github.com/cryptix/go/logging"
-	"github.com/cryptix/synchrotron/app/models"
 	"github.com/cryptix/synchrotron/config/admin"
 	"github.com/cryptix/synchrotron/db"
+	"github.com/cryptix/synchrotron/models"
 )
 
 func init() {

@@ -8,10 +8,10 @@ import (
 	"github.com/qor/l10n"
 	"github.com/qor/qor/utils"
 
-	"github.com/cryptix/synchrotron/app/models"
 	"github.com/cryptix/synchrotron/config/admin"
 	"github.com/cryptix/synchrotron/config/auth"
 	"github.com/cryptix/synchrotron/db"
+	"github.com/cryptix/synchrotron/models"
 )
 
 // GetCurrentUser get current user from request

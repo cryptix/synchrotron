@@ -20,11 +20,11 @@ import (
 	"github.com/qor/widget"
 	"golang.org/x/crypto/bcrypt"
 
-	"github.com/cryptix/synchrotron/app/models"
 	"github.com/cryptix/synchrotron/config/admin/bindatafs"
 	"github.com/cryptix/synchrotron/config/auth"
 	"github.com/cryptix/synchrotron/config/i18n"
 	"github.com/cryptix/synchrotron/db"
+	"github.com/cryptix/synchrotron/models"
 )
 
 var Admin *admin.Admin
