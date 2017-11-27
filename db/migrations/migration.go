@@ -21,6 +21,8 @@ func init() {
 
 	AutoMigrate(&models.User{})
 
+	AutoMigrate(&models.Repository{})
+
 	AutoMigrate(&transition.StateChangeLog{})
 
 	AutoMigrate(&activity.QorActivity{})

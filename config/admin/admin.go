@@ -120,28 +120,19 @@ func init() {
 				{"Confirmed"},
 			},
 		},
-		&admin.Section{
-			Title: "Credit Information",
-			Rows: [][]string{
-				{"Balance"},
-			},
-		},
-		&admin.Section{
-			Title: "Accepts",
-			Rows: [][]string{
-				{"AcceptPrivate", "AcceptLicense", "AcceptNews"},
-			},
-		},
-		&admin.Section{
-			Title: "Default Addresses",
-			Rows: [][]string{
-				{"DefaultBillingAddress"},
-				{"DefaultShippingAddress"},
-			},
-		},
-		"Addresses",
 	)
 	user.EditAttrs(user.ShowAttrs())
+
+	// repos
+	repo := Admin.AddResource(&models.Repository{}, &admin.Config{Menu: []string{"Repositories"}})
+	repoTypes := []string{"Github", "Native"}
+	repo.Meta(&admin.Meta{Name: "Type", Config: &admin.SelectOneConfig{Collection: repoTypes}})
+	repo.Filter(&admin.Filter{
+		Name: "Type",
+		Config: &admin.SelectOneConfig{
+			Collection: repoTypes,
+		},
+	})
 
 	// Blog Management
 	article := Admin.AddResource(&models.Article{}, &admin.Config{Menu: []string{"Blog Management"}})
@@ -156,7 +147,7 @@ func init() {
 	Admin.AddResource(Worker, &admin.Config{Menu: []string{"Site Management"}})
 
 	// Add Setting
-	Admin.AddResource(&models.Setting{}, &admin.Config{Name: "Shop Setting", Singleton: true})
+	Admin.AddResource(&models.Setting{}, &admin.Config{Name: "Site Managment", Singleton: true})
 
 	// Add Search Center Resources
 	Admin.AddSearchResource(user)
